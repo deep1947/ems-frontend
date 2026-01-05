@@ -1,22 +1,26 @@
 import {useEffect, useState } from 'react'
-import { listEmployees,deleteEmployee } from "../services/EmployeeService"
+import { getEmployeesPaged, deleteEmployee } from "../services/EmployeeService";
 import { useNavigate } from 'react-router-dom'
 
 
 const ListEmployeeComponent = () => {
 
   const[employees, setEmployees] = useState([])
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+
+  const pageSize = 5;
   const navigator = useNavigate();
 
   useEffect(() => {
-   getAllEmployees();  
-  }, [])
+   getAllEmployees(currentPage);  
+  }, [currentPage])
 
-  function getAllEmployees(){
-    listEmployees().then((response) => {
-        setEmployees(response.data);
-    }).catch(error => {
-        console.log(error);
+  function getAllEmployees(page){
+    getEmployeesPaged(page,pageSize).then((response) => {
+        setEmployees(response.data.content);
+         setTotalPages(response.data.totalPages);
+    }).catch(error => {console.log(error);
     })
 
   }
@@ -31,7 +35,7 @@ const ListEmployeeComponent = () => {
     function removeEmployee(id){
      console.log(id);
      deleteEmployee(id).then( () => {
-        getAllEmployees();
+        getAllEmployees(currentPage);
      }).catch( error => {
         console.log(error);
      } )
@@ -69,6 +73,28 @@ const ListEmployeeComponent = () => {
                 
             </tbody>
         </table>
+ {/* ✅ PAGINATION CONTROLS */}
+      <div className="d-flex justify-content-center">
+        <button
+          className="btn btn-secondary me-2"
+          disabled={currentPage === 0}
+          onClick={() => setCurrentPage(currentPage - 1)}
+        >
+          Previous
+        </button>
+
+        <span className="align-self-center">
+          Page {currentPage + 1} of {totalPages}
+        </span>
+
+        <button
+          className="btn btn-secondary ms-2"
+          disabled={currentPage === totalPages - 1}
+          onClick={() => setCurrentPage(currentPage + 1)}
+        >
+          Next
+        </button>
+      </div>
     </div>
   )
 }
