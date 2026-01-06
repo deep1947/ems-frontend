@@ -6,7 +6,7 @@ const EmployeeComponent = () => {
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
+  const [emailId, setEmailId] = useState('');
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ const EmployeeComponent = () => {
   const [errors, setErrors] = useState({
     firstName: '',
     lastName: '',
-    email: ''
+    emailId: ''
   });
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const EmployeeComponent = () => {
         .then(response => {
           setFirstName(response.data.firstName);
           setLastName(response.data.lastName);
-          setEmail(response.data.email);
+          setEmailId(response.data.emailId);
         })
         .catch(error => console.log(error));
     }
@@ -34,7 +34,7 @@ const EmployeeComponent = () => {
 
     if (!validateForm()) return;
 
-    const employee = { firstName, lastName, email };
+    const employee = { firstName, lastName, emailId };
 
     if (id) {
       updateEmployee(id, employee)
@@ -65,10 +65,10 @@ const EmployeeComponent = () => {
       valid = false;
     }
 
-    if (email.trim()) {
-      errorsCopy.email = '';
+    if (emailId.trim()) {
+      errorsCopy.emailId = '';
     } else {
-      errorsCopy.email = 'Email is required';
+      errorsCopy.emailId = 'EmailId is required';
       valid = false;
     }
 
@@ -117,12 +117,12 @@ const EmployeeComponent = () => {
               <div className="form-group mb-2">
                 <label className="form-label">Email :</label>
                 <input
-                  type="email"
-                  value={email}
-                  className={`form-control ${errors.email ? 'is-invalid' : ''}`}
-                  onChange={e => setEmail(e.target.value)}
+                  type="emailId"
+                  value={emailId}
+                  className={`form-control ${errors.emailId ? 'is-invalid' : ''}`}
+                  onChange={e => setEmailId(e.target.value)}
                 />
-                {errors.email && <div className="invalid-feedback">{errors.email}</div>}
+                {errors.emailId && <div className="invalid-feedback">{errors.emailId}</div>}
               </div>
 
               <button type="submit" className="btn btn-success">

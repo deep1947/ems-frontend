@@ -62,7 +62,7 @@ const ListEmployeeComponent = () => {
                             <td>{employee.id}</td>
                             <td>{employee.firstName}</td>
                             <td>{employee.lastName}</td>
-                            <td>{employee.email}</td>
+                            <td>{employee.emailId}</td>
                             <td>
                                 <button className='btn btn-info'onClick={()=>updateEmployee(employee.id)}> Update </button>
                                 <button className='btn btn-danger'onClick={() => removeEmployee(employee.id)} style={{marginLeft:'10px'}}> Delete </button>
