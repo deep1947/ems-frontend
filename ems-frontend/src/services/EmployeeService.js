@@ -8,7 +8,9 @@ export const createEmployee = (employee)=>axios.post(EMPLOYEE_API_BASE_URL,emplo
 
 export const getEmployee = (employeeId)=>axios.get(EMPLOYEE_API_BASE_URL + '/' + employeeId);
 
-
+export const searchEmployees = (keyword, page, size, sortBy, direction) => {
+  return axios.get(`${EMPLOYEE_API_BASE_URL}/search`, {params: {keyword,page,size,sortBy,direction}});
+}
 
 export const getEmployeesPaged = (page, size) => {
   return axios.get(`${EMPLOYEE_API_BASE_URL}/paged?page=${page}&size=${size}`);
