@@ -1,22 +1,37 @@
-import axios from "axios";
+import api from "./axiosConfig";
 
-const EMPLOYEE_API_BASE_URL = "http://localhost:8080/api/employees";
+const EMPLOYEE_API_BASE_URL = "/api/employees";
 
-export const listEmployees = () => axios.get(EMPLOYEE_API_BASE_URL);
 
-export const createEmployee = (employee)=>axios.post(EMPLOYEE_API_BASE_URL,employee);
 
-export const getEmployee = (employeeId)=>axios.get(EMPLOYEE_API_BASE_URL + '/' + employeeId);
-
-export const searchEmployees = (keyword, page, size, sortBy, direction) => {
-  return axios.get(`${EMPLOYEE_API_BASE_URL}/search`, {params: {keyword,page,size,sortBy,direction}});
-}
-
-export const getEmployeesPaged = (page, size) => {
-  return axios.get(`${EMPLOYEE_API_BASE_URL}/paged?page=${page}&size=${size}`);
+/* ================= GET ALL ================= */
+export const getAllEmployees = () => {
+  return api.get(EMPLOYEE_API_BASE_URL);
 };
 
+/* ================= SEARCH / PAGED ================= */
+export const searchEmployees = (keyword, page, size, sortBy, direction) => {
+  return api.get(`${EMPLOYEE_API_BASE_URL}/search`, {
+    params: { keyword, page, size, sortBy, direction }
+  });
+};
 
-export const updateEmployee = (employeeId,employee)=>axios.put(EMPLOYEE_API_BASE_URL + '/' + employeeId,employee);
+/* ================= GET BY ID ================= */
+export const getEmployee = (id) => {
+  return api.get(`${EMPLOYEE_API_BASE_URL}/${id}`);
+};
 
-export const deleteEmployee = (employeeId)=>axios.delete(EMPLOYEE_API_BASE_URL + '/' + employeeId);
+/* ================= CREATE ================= */
+export const createEmployee = (employee) => {
+  return api.post(EMPLOYEE_API_BASE_URL, employee);
+};
+
+/* ================= UPDATE ================= */
+export const updateEmployee = (id, employee) => {
+  return api.put(`${EMPLOYEE_API_BASE_URL}/${id}`, employee);
+};
+
+/* ================= DELETE ================= */
+export const deleteEmployee = (id) => {
+  return api.delete(`${EMPLOYEE_API_BASE_URL}/${id}`);
+};
